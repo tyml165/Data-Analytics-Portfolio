@@ -1,0 +1,97 @@
+SELECT * FROM BIT_DB.JanSales
+WHERE length(OrderId) = 6 AND OrderId <> 'Order ID';
+SELECT * FROM BIT_DB.customers
+WHERE length(Order_id) = 6 AND Order_id <> 'Order ID';
+
+select count(orderID) FROM BIT_DB.JanSales where length(orderid) = 6 
+AND orderid <> 'Order ID';
+select count(orderID) FROM BIT_DB.JanSales where Product='iPhone' AND length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+Select f.Product,c.acctnum
+From Customers c
+INNER JOIN BIT_DB.FebSales f
+On f.OrderId=c.order_id
+Where Product<> 'Product';
+
+select distinct Min(Price), Product FROM BIT_DB.JanSales GROUP BY product, price 
+ORDER BY price ASC LIMIT 1;
+
+SELECT sum(quantity)*price as revenue
+,product
+FROM BIT_DB.JanSales
+GROUP BY product;
+
+Select location, Product, Sum(quantity),Sum(quantity)*price as Revenue
+from BIT_DB.FebSales WHERE location = '548 Lincoln St, Seattle, WA 98101'
+ group by product;
+ 
+select 
+count(distinct cust.acctnum), 
+avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+WHERE Feb.Quantity>2
+AND length(orderid) = 6 
+AND orderid <> 'Order ID';
+
+SELECT orderdate
+FROM BIT_DB.FebSales
+WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00';
+
+SELECT location
+FROM BIT_DB.FebSales 
+WHERE orderdate = '02/18/19 01:35';
+
+SELECT sum(quantity)
+FROM BIT_DB.FebSales 
+WHERE orderdate like '02/18/19%';
+
+SELECT distinct Product
+FROM BIT_DB.FebSales
+WHERE Product like '%Batteries%';
+
+SELECT distinct Product, Price
+FROM BIT_DB.FebSales 
+WHERE Price like '%.99';
+
+SELECT Product, SUM(quantity)
+FROM BIT_DB.FebSales 
+WHERE location like '%Los Angeles%'
+GROUP BY Product;
+
+Select distinct location, Sum(quantity)
+FROM BIT_DB.FebSales
+where location like '%NY%'
+AND orderid <> 'OrderID'
+AND length(orderid)=6
+Group by location
+Having Sum(quantity)>2;
+
+Select Product, Sum(quantity)
+From BIT_DB.JanSales
+where orderid <> 'OrderID'
+AND product like '%Headphone%'
+Group by Product;
+
+Select sum(quantity*price)/count(cust.acctnum)
+From BIT_DB.FebSales Feb
+Left Join BIT_DB.customers cust
+on Feb.orderid=cust.order_id
+WHERE length(orderid)=6 
+AND orderid <> 'Order ID';
+
+Select sum(quantity)/count(cust.acctnum)
+From BIT_DB.FebSales as Feb
+Left Join BIT_DB.customers as cust
+on Feb.orderid=cust.order_id
+WHERE length(orderid)=6 
+AND orderid <> 'Order ID';
+
+Select product, quantity*price as Total_Revenue
+From BIT_DB.JanSales
+group by productOrder by sum(quantity*price) desc
+Limit 1;
+
+
